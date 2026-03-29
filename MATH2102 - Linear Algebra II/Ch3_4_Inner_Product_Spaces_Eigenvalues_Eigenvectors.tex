@@ -1,0 +1,416 @@
+\documentclass[a4paper,8pt]{extarticle} % 10pt - 30% = 7pt
+
+% Packages
+\usepackage[utf8]{inputenc} % Unicode support (Umlauts etc.)
+\usepackage{amsmath,mathtools} % Advanced math typesetting
+\usepackage{physics} % Physics notation
+\usepackage{hyperref} % Add a link to your document
+\usepackage{geometry} % Margins
+\usepackage{multicol} % for multicolumn layout
+\usepackage{xcolor} % For color
+\usepackage{tcolorbox} % For colored boxes
+\usepackage{fancyhdr} % Headers and footers
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+
+\geometry{top=1in, headheight=0.5in, headsep=0.1in, margin=0.5in}
+\raggedbottom
+
+% Compact itemize
+\usepackage{enumitem}
+\setlist{nosep}
+
+% Compact sections
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{*0}{*0}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+
+% Reduce line spacing
+\renewcommand{\baselinestretch}{0.8}
+
+% Color scheme
+\definecolor{lightblue}{rgb}{0.75,0.85,1}
+
+% Headers
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt} % no line in header area
+\fancyhead[C]{Linear Algebra II Chapters 3-4} % Center
+
+\newcommand{\mybox}[2]{
+    \begin{tcolorbox}[colback=lightblue!5!white,colframe=lightblue!75!black,boxsep=1pt,arc=0pt,outer arc=0pt,coltext=black,title={\textcolor{black}{#1}}, before skip=2pt, after skip=2pt]
+        #2
+    \end{tcolorbox}
+}
+
+% Start the document
+\begin{document}
+
+\fontsize{7pt}{8pt}\selectfont
+
+\begin{multicols*}{2}
+
+\mybox{Inner Products}{
+$\langle u, v\rangle \in \mathbb{F}$ has these properties (and must be finite)
+    \begin{subequations}
+    \begin{align}
+    \langle v, v\rangle &\geq 0, \text{ for all $v \in V$}\\
+    \langle v, v\rangle &= 0 \Leftrightarrow v= 0 \\
+    \langle u+w, v\rangle &= \langle u, v\rangle + \langle w, v\rangle\\
+     \langle \lambda u, v\rangle &= \lambda\langle u, v\rangle\\
+    \langle u, v\rangle&= \overline{\langle v, u\rangle}
+    \end{align}
+    \end{subequations}
+
+    You can derive these equations subsequently
+    \begin{subequations}
+    \begin{align}
+    T(u) &= \langle u, v\rangle, \text{ is a linear map}\\
+    \langle v,0\rangle &= \langle 0,v\rangle = 0, \forall v\in V\\
+    \langle u, v+w\rangle&= \langle u, v\rangle+\langle u, w\rangle\\
+    \langle u, \lambda v\rangle&= \overline{\lambda}\langle u, v\rangle
+    \end{align}
+    \end{subequations}
+
+    The Euclidean (standard) inner product in $\mathbb{F}^n$ is
+    \begin{equation}
+        \langle\textbf{x,y}\rangle=x_1\overline{y_1}+\cdots+x_n\overline{y_n}
+    \end{equation}
+}
+
+
+\mybox{Norms}{
+\vspace{-\abovedisplayskip}
+\begin{subequations}
+    \begin{align}
+        ||v|| &= \sqrt{\langle v, v\rangle} \\
+        ||v||=0&\Leftrightarrow v=0\\
+        ||\lambda v||&=|\lambda|\cdot||v||
+    \end{align}
+\end{subequations}
+}
+\mybox{Orthonormal Lists}{
+A orthogonal set (non-zero) is L.I. For orthonormal \underline{basis}
+
+\begin{subequations}
+    \begin{align}
+        \mathbf{v} &= \langle v, e_1\rangle e_1 + \dots + \langle v, e_n\rangle e_n \\
+        \norm{\mathbf{v}} &= \sqrt{|\langle v, e_1\rangle|^2 + \dots + |\langle v, e_n\rangle|^2}, \text{ (orthonormal \underline{basis})}\\
+        &|\langle v, e_1\rangle|^2+\cdots |\langle v, e_m\rangle|^2\leq ||\mathbf{v}||^2, \text{ (orthonormal \underline{set})}
+    \end{align}
+\end{subequations}
+
+If $e_1,\cdots,e_m$ is an orthonormal list of vectors in $V$, then
+\begin{equation}
+    ||a_1e_1+\cdots+a_me_m||^2=|a_1|^2+\cdots+|a_m|^2
+\end{equation}
+
+Gram -Schmidt Procedure
+\begin{equation}
+    f_k = v_k-\frac{\langle v_k, f_1\rangle}{||f_1||^2}f_1-\cdots-\frac{\langle v_k, f_{k-1}\rangle}{||f_{k-1}||^2}f_{k-1}
+\end{equation}
+Where $e_k=\frac{f_k}{||f_k||}$. Alternatively, $f_k = v_k - \langle v_k, e_1\rangle e_1-\cdots-\langle v_k, e_{k-1}\rangle e_{k-1}$.
+}
+
+\mybox{Riesz Representation Theorem}{
+A linear functional is a linear map from $V$ to $\mathbb{F}$. $V'= \mathcal{L}(V, F)$. The Riesz Representation Theorem states for \underline{every} $f\in V'$
+
+\begin{subequations}
+    \begin{align}
+    f(\mathbf{u})&=\langle\mathbf{u}, \mathbf{v}\rangle, \text{ for a unique $\mathbf{v} \in V$}\\
+    \mathbf{v}&= \overline{f(e_1)}e_1+\cdots+\overline{f(e_n)}e_n, (\text{if orthonormal basis})
+    \end{align}
+\end{subequations}
+
+Note that if vectors are functions, then e.g. $e_2 = \sqrt{3}(2x-1)$, with $f(p)=p(\frac{1}{2})$. Then $f(e_2)=e_2(\frac{1}{2})=\sqrt{3}(1-1)=0$.\\
+
+If $V$ finite dimensional, $T\in \mathcal{L}(V)$. $T$ has is upper triangular wrt. some orthonormal basis $\Leftrightarrow$ $m_T(x)=(x-\lambda_1)\cdots(x-\lambda_n)$. \\
+
+If finite dimensional complex vector space, has upper-triangular matrix wrt. \underline{some} basis. If complex inner product space, wrt. some \underline{orthonormal} basis.
+}
+
+\mybox{Orthogonal Complement}{
+For any $U\subseteq V$, the \underline{orthogonal complement} of $U$, denoted $U^{\perp}$, is the set of all vectors in $V$ that are orthogonal to every vector in $U$ 
+
+\begin{equation}
+    \mathcal{U}^{\perp}=\{v\in V: \langle u, v\rangle=0, \forall u\in \mathcal{U}\}
+\end{equation}
+\text{$0$ is orthogonal to itself and every vector in $V$.}
+\begin{subequations}
+    \begin{align}
+        \{0\}^{\perp} = V, &\text{ and } V^{\perp} =\{0\}\\
+        \text{If } U_1 \subseteq U_2 \subseteq V&\Rightarrow U_1^{\perp} \supseteq U_2^{\perp}\\
+        U \subseteq V&\Rightarrow U \cap U^{\perp}\subseteq \{0\}\\
+        V &= U \oplus U^{\perp}\\
+        \dim(V)&= \dim(U)+\dim(U^{\perp})\\
+        U &= (U^{\perp})^{\perp}\\
+        U^{\perp}=\{0\}&\Leftrightarrow U=V, \text{if $U$ finite dim}
+        \end{align}
+\end{subequations}
+}
+
+\mybox{Orthogonal Projection}{
+Formally, the orthogonal projection of $V$ to $U$, is $P_U\in \mathcal{L}(V)$, where for each $v = u + w$, where $u \in U, w\in U^{\perp}$, $P_U(v)=u$. For a one dimensional subspace
+\begin{equation}
+    P_U(v)=\frac{\langle v, u\rangle}{||u||^2}u
+\end{equation}
+These statements are equivalent to $P_U\in \mathcal{L}(V)$
+\begin{subequations}
+    \begin{align}
+        P_U(u) = u, u\in U&\text{ and } P_U(w)=0, w\in U^{\perp}\\
+        \text{null}(P_U)=U^{\perp} &\text{ and } \text{range}(P_u)=U\\
+        v-P_U(v)&\in U^{\perp}, \forall v \in V\\
+        P_U^2&=P_U\\
+        ||P_U(v)||&\leq ||v||\\
+        \langle v, e_1\rangle e_1 + \cdots + \langle v, e_m\rangle e_m&=P_U(v), \text{ if o.b. of $U$ (not $V$)}\\
+        ||v-P_U(v)||&\leq||v-u||, \forall u \in U
+        \end{align}
+\end{subequations}
+}
+
+\mybox{Pseudoinverse}{
+If $V$ finite dimensional, and $T\in \mathcal{L}(V, W)$, then $T|_{(\text{null} T)^{\perp}}$ is an injective map from $(\text{null } T)^{\perp}$ to $\text{range}(T)$. i.e. $\text{range}(T|_{(\text{null} T)^{\perp}})=\text{range}(T)$.\\
+
+Suppose $T\in \mathcal{L}(V, W)$. Define $T^{\dagger}\in\mathcal{L}(W, V)$ of $T$ by
+\begin{equation}
+    T^{\dagger}(\mathbf{w})=(T|_{\text{null} T^{\perp}})^{-1}P_{\text{range}T}(\mathbf{w})
+\end{equation}
+Its kind of like a "pipe". The domain is $W$, and the range is $(\text{null } T)^{\perp}$. The following statements are equivalent
+\begin{subequations}
+    \begin{align}
+        T^{\dagger}&= T^{-1}, \text{ if $T$ invertible}\\
+        TT^{\dagger}=P_{\text{range}(T)}&\text{ and } T^{\dagger}T=P_{\text{null}(T)^{\perp}}
+    \end{align}
+\end{subequations}
+
+The pseudo inverse provides the best approximate solution. For any $v\in V$ and $w \in W$, we have
+\begin{equation}
+        ||T(T^{\dagger}(\mathbf{w}))-\mathbf{w}||\leq||T(\mathbf{v})-\mathbf{w}||, \text{ eqiff $v\in T^{\dagger}w+\text{null}(T)$}
+\end{equation}
+
+If $v \in T^{\dagger}(w)+\text{null}(T)$, then
+\begin{equation}
+    ||T^{\dagger}(w)||\leq||v||, \text{eqiff $v = T^{\dagger}(w)$}
+\end{equation}
+}
+
+\mybox{Adjoint (self adjoint $\Rightarrow$ adjoint)}{
+The (unique) adjoint of $T\in \mathcal{L}(V, W)$ is the function $T^{*}: W\rightarrow V$ such that for every $v \in V$ and $w \in W$
+\begin{equation}
+    \langle Tv, w\rangle=\langle v, T^{*}w\rangle
+\end{equation}
+
+Some useful properties are that $(\lambda T)^{*} = \overline{\lambda}T^{*}$, $(T^{*})^{*}=T$, $(ST)^{*}=T^{*}S^{*}$ and $(T^{-1})^{*}=(T^{*})^{-1}$. If $T\in \mathcal{L}(V, W)$, then $T^{*}\in\mathcal{L}(W, V)$. The following are true
+\begin{subequations}
+    \begin{align}
+        \text{null}(T^{*})&=\text{range}(T)^{\perp}\\
+        \text{range}(T^{*})&=\text{null}(T)^{\perp}\\
+        \text{null}(T)&=\text{range}(T^{*})^{\perp}\\
+        \text{range}(T)&=\text{null}(T^{*})^{\perp}
+    \end{align}
+\end{subequations}
+
+Conjugate transpose \underline{orthonormal} only, $\mathcal{M}(T^{*})=(\mathcal{M}(T))^{*}$.
+
+}
+
+
+\mybox{Self-adjoint}{
+If $T = T^{*}$, $(T\in \mathcal{L}(V))$. Also called Hermitian. Eigenvalue always \underline{real}. Equivalently $\langle T(v), w\rangle=\langle v, T(w)\rangle$. Some conditions
+\begin{subequations}
+    \begin{align}
+        \langle Tv, v\rangle=0 &\Leftrightarrow T = 0, \text{ if $\mathbb{F} = \mathbb{C}$}\\
+        T\text{ is self adjoint}&\Leftrightarrow\langle Tv, v\rangle\in \mathbb{R}, \text{ if $\mathbb{F}=\mathbb{C}$}\\
+        \langle Tv,v\rangle=0&\Leftrightarrow T = 0, \text{ if $T$ self adjoint}\\
+        \mathcal{M}(T)&=(\mathcal{M}(T))^{*}\\
+        T \text{ is self adjoint}\Leftrightarrow &[T]_{\mathcal{B}} \text{ symmetric ($\mathcal{B}$ orthonormal)}
+    \end{align}
+\end{subequations}
+
+A self adjoint operator $T\in\mathcal{L}(V)$ is \underline{positive} if $\langle T(\mathbf{v}), \mathbf{v}\rangle \geq 0$. Note if $\mathbb{F}=\mathbb{C}$, you can relax "self adjoint". Always check matrix representation first (as self adjoint is a condition).\\
+
+Every positive operator $T$ has a unique positive square root $\sqrt{T}$. A self-adjoint operator is positive and invertible $\Leftrightarrow$ $\langle T(\mathbf{v}), \mathbf{v}\rangle > 0, \forall v\in V\setminus\{0\}$. An operator $T\in \mathcal{L}(V)$ is positive $\Leftrightarrow$ $T = R^{*}R$ for some $R \in \mathcal{L}(V)$. T is self-adjoint and all eigenvalues of $T$ are non-negative. Wrt. some orthonormal basis of $V$, the matrix of $T$ is diagonal with only non-negative values on the diagonal.
+}
+
+\mybox{Normal (self adjoint $\Rightarrow$ normal)}{
+If $TT^{*}=T^{*}T \Leftrightarrow ||Tv|| = ||T^{*}v||$. Some consequences are
+\begin{subequations}
+    \begin{align}
+        \text{null}(T)=\text{null}(T^{*}) &\text{ and }\text{range}(T)=\text{range}(T^{*})\\
+        V&= \text{range}(T)\oplus\text{null}(T)\\
+        T-\lambda I \text{ is }&\text{normal for every $\lambda$ in $\mathbb{F}$}\\
+        Tv=\lambda v &\Leftrightarrow T^{*}(v)=\overline{\lambda}v\\
+        \text{The e.vec of $T$}&\text{ corr. to distinct e.va are orthogonal}
+    \end{align}
+Finally, $\mathbb{F}=\mathbb{C}$, then $T$ normal $\Leftrightarrow$ $\exists$ \underline{commuting} self adjoint $A, B$ st. $T = A + iB$
+\end{subequations}
+}
+
+\mybox{Isometry (unitary $\Rightarrow$ isometry)}{
+$||S(\mathbf{v})||=||\mathbf{v}||$, $S\in \mathcal{L}(V, W)$. Suppose basis $\mathcal{B}$ $\text{span}(e_1,\cdots, e_n)=V$ and basis $\mathcal{C}$ $\text{span}(f_1,\cdots,f_n)=W$ are orthonormal basis for $S\in \mathcal{L}(V, W)$. Eigenvalues $\lambda$ have $|\lambda|=1. $The following are equiv.
+\begin{subequations}
+    \begin{align}
+        T \text{ is }&\text{an isometry}\\
+        S^{*}S&= I\\
+        \langle Su, Sv\rangle&=\langle u, v\rangle, \forall u, v\in V\\
+        Se_1,\cdots,Se_n \text{ is an} &\text{ orthonormal list in $\underline{W}$}\\
+        \text{Columns of }[T]_{\mathcal{BC}} &\text{ form an orthonormal \underline{set}}
+    \end{align}
+\end{subequations}
+}
+
+\mybox{Unitary}{
+A operator $S\in \mathcal{L}(V)$ is unitary if it is an invertible isometry. These are equivalent (remember must be square)
+\begin{subequations}
+    \begin{align}
+        S\text{ is unitary} &\Leftrightarrow S^{*} \text{ is unitary}\\
+        S^{*}S=SS^{*}&= I\\
+        S\text{ invertible (by def.)}& \text{ and $S^{-1}=S^{*}$}\\
+        Se_1,\cdots,Se_n \text{ is an}&\text{ orthonormal basis of $\underline{V}$}\\
+        \text{Columns of $[T]_{\mathcal{B}}$}&\text{ form an orthonormal \underline{basis}}
+    \end{align}
+\end{subequations}
+
+$Q\in\mathbb{F}^{n\times n}$ is unitary matrix if columns form orthonormal basis
+\begin{subequations}
+    \begin{align}
+        Q \text{ is a} &\text{ unitary matrix}\\
+        \text{The rows of $Q$ form}&\text{ an orthonormal basis of $\mathbb{F}^n$}\\
+        ||Q\mathbf{v}||&=||\mathbf{v}||\\
+        Q^{*}Q&=QQ^{*}=I
+    \end{align}
+\end{subequations}
+}
+
+\mybox{QR Factorisation}{
+$A$ is a square matrix with L.I. columns. $\exists$ \underline{unique} $Q$ unitary, $R$ upper triangular with only positive numbers on diagonal where $A = QR$. If not L.I., then it just "there exists" (not unique).\\
+
+Algorithm: Gram-Schmidt. Then $Q = \{e_1|\cdots|e_k \}$. $R_{r, c}=\langle v_c, e_r\rangle$.\\
+
+Easy to solve $Ax =b \Rightarrow QRx=b\Rightarrow Rx=Q^{*}b$
+}
+
+\mybox{Cholesky Factorisation}{
+Positive definite if \underline{self-adjoint}, $\langle Bx, x\rangle>0$, for non-zero $x\in \mathbb{F}^{n}$\\
+
+Cholesky Factorisation: For every positive definite matrix $B$, $\exists$ \underline{unique} upper triangular matrix $R$ with positive entries on diagonal such that $B = R^{*}R$\\
+
+Proof: $B = A^{*}A (\text{see }19)=(QR)^{*}QR=R^{*}Q^{*}QR=R^{*}R$.
+}
+
+\mybox{Invariant Subspaces}{
+Linear map from a vector space to itself is an operator ($T\in\mathcal{L}(V)$)\\
+
+\underline{T-invariant}: Suppose $T \in \mathcal{L}(V)$. A subspace $\mathcal{U}$ of $V$ is \underline{invariant} under $T$ if $Tu\in \mathcal{U}, \forall u\in \mathcal{U}$. $\{0\}, V, \text{null}(T), \text{range(T)}$ invariant.\\
+
+\underline{Eigenvalue}: Suppose $T \in \mathcal{L}(V)$. A number $\lambda\in\mathbb{F}$ is an eigenvalue of $T$ if there exists $v\in V$ such that $v \neq 0$ and $Tv=\lambda v$. $\lambda$ is an eigenvalue of $T \Leftrightarrow T-\lambda I$ is not injective / surjective / invertible\\
+
+\underline{Eigenvector}: Suppose $T\in\mathcal{L}(V)$ and $\lambda \in \mathbb{F}$ is an eigenvalue. $v\in V$ is an eigenvector of $T$ corresponding to $\lambda$ if $v \neq 0$ and $Tv=\lambda v$. Every list of eigenvalues corr. distinct eigenvalues of $T$ is L.I. If $\mathbb{F}=\mathbb{C}$, every $T \in \mathcal{L}(V)$ has at least one eigenvalue\\
+
+\underline{Eigenspace}: $E(\lambda, T)=\text{null}(T-\lambda I)=\{v\in V : Tv=\lambda v\}$ (inc $0$). The sum of eigenspaces corr. distinct eigenvalues is a direct sum.
+}
+
+\mybox{Other (cont.)}{
+\underline{Dual Spaces}: Linear functional is an element from $\mathcal{L}(V, \mathbb{F})$. Dual space is $V' = \mathcal{L}(V,\mathbb{F})$. Note $\dim(V)=\dim(V')$. Also $T$ surj $\Leftrightarrow$ $T'$ inj. $T$ inj $\Leftrightarrow$ $T'$ surj.
+}
+
+\mybox{Minimal Polynomial}{
+$V$ f.d. and $T\in \mathcal{L}(V)$. $\exists$ \underline{unique} \underline{monic} polynomial $p \in \mathcal{P}(\mathbb{F})$ of smallest deg. s.t. $p(T)=0$, denoted $m_T$. $\deg(m_T)\leq \dim(V)$. Note $T$ not invertible $\Leftrightarrow$ $0$ is an eigenvalue.
+\begin{subequations}
+    \begin{align}
+        \{\lambda \in \mathbb{F}:m_T(\lambda)=0\}&=\{\lambda\in\mathbb{F}:\lambda \text{ is an eigenvalue of } T\}
+    \end{align}
+\end{subequations}
+
+Suppose $p(t)$ is the minimal polynomial of $T\in\mathcal{L}(V)$
+\begin{subequations}
+    \begin{align}
+        \text{Suppose }q\in F[t]. \text{ }q(T)=0 &\Leftrightarrow p(t)\text{ divides }q(t)\\
+        U\text{ subspace of } V. \text{ Min poly. $T_U$}&\text{ divides $p(t)$}\\
+        \text{Constant term of $p$ is $0$}&\Leftrightarrow T \text{ is not invertible}
+    \end{align}
+\end{subequations}
+
+Even dimensional null space. Suppose $\mathbb{F}=\mathbb{R}, b, c\in R$ so that $b^2<4c$. Then the nullity / $\dim(\text{null}(T^2+bT+cI))$ is an even number.\\
+
+If $\dim(V)$ is odd, then any operator $T$ on $V$ has an eigenvalue.
+}
+
+\mybox{Triangularisation}{
+Suppose $T \in \mathcal{L}(V)$, and $v_1, \cdots, v_n$ is a basis of $V$. These equiv.
+\begin{subequations}
+    \begin{align}
+        \text{The matrix of $T$}&\text{ wrt. $v_1, \cdots, v_n$ is upper triangular}\\
+        \text{span}(v_1, \cdots, v_k)\text{ is}&\text{ invariant under }T,\text{ for $k = 1,\cdots, n$}\\
+        Tv_k\in\text{span}&(v_1, \cdots, v_k), \text{ for each $k = 1,\cdots,n$}
+    \end{align}
+\end{subequations}
+
+If $[T]_{\mathcal{B}}$ is upper triangular with $\lambda_1, \cdots, \lambda_n$ on the diagonal, then
+\begin{subequations}
+    \begin{align}
+        (T-\lambda_1 I)\cdots(T-&\lambda_nI)=0\\
+        \text{The eigenvalues are}&\text{ $\lambda_1,\cdots,\lambda_n$}
+    \end{align}
+\end{subequations}
+
+Let $T \in \mathcal{L}(V)$. $\exists$ basis $\mathcal{B}$ of $V$ for which $[T]_{\mathcal{B}}$ is upper triangular $\Leftrightarrow$ $m_T$ can be factorised as $m_T=(z-\lambda_1)\cdots(z-\lambda_m)$. If $\mathbb{F}=\mathbb{C}$, there is always an upper triangular basis.
+}
+
+\mybox{Diagonalisation}{
+Let $T\in\mathcal{L}(V)$, and $\lambda_1,\cdots,\lambda_m$ be distinct eigenvalues of $T$. The following statements are equivalent
+\begin{subequations}
+    \begin{align}
+        \text{T is}&\text{ diagonaliseable}\\
+        V \text{ has a basis}&\text{ consisting of eigenvectors of $T$}\\
+        V= E(&\lambda_1, T)\oplus\cdots\oplus E(\lambda_m,T)\\
+        \dim(V)=\dim(&E(\lambda_1, T))+\cdots+\dim(E(\lambda_m, T))
+    \end{align}
+\end{subequations}
+
+Suppose that $V$ is finite dimensional, $T \in \mathcal{L}(V)$ has $\dim(V)$ \underline{distinct} eigenvalues. Then $T$ is diagonaliseable.\\
+
+Remember, $A^n=PD^nP^{-1}$. $P$ is eigenvectors, $D$ is diagonal matrix of eigenvalues.\\
+
+Let $T \in \mathcal{L}(V)$. $\exists$ basis $\mathcal{B}$ of $V$ for which $[T]_{\mathcal{B}}$ is diagonal $\Leftrightarrow$ $m_T$ can be factorised as \underline{distinct} linear factors $m_T=(z-\lambda_1)\cdots(z-\lambda_m)$.\\
+
+Suppose $T\in\mathcal{L}(V)$ is diagonaliseable and $\mathcal{U}$ is a subspace of $V$ that is invariant under $T$. Then $T|_{\mathcal{U}}$ is a diagonaliseable operator on $\mathcal{U}$.
+}
+
+\mybox{Other}{
+\underline{Basis}: 1. Linearly independent, 2. Spans $V$ (useful: L. I. list of vectors of length $\dim(V)$ is a basis of $V$)\\
+
+\underline{Dimension of sum}: $\dim(V_1+V_2)=\dim(V_1)+\dim(V_2)-\dim(V_1\cap V_2)$. $\dim(V_1\oplus V_2)=\dim(V_1)+\dim(V_2)$\\
+
+\underline{Direct Sum}: $V_1\oplus\cdots\oplus V_k$ if each element in it can only be written in only one way as a sum of $v_1+\cdots+v_m, v_k\in V_k$
+\begin{subequations}
+    \begin{align}
+        V_1+\cdots+V_m \text{ direct sum}&\Leftrightarrow \text{$0$ is take $0=v_k\in V_k$}\\
+        V_i\cap V_j&= \{0\}, i\neq j
+    \end{align}
+\end{subequations}
+
+\underline{Null Space}: $\text{null}(T)=\{v\in V: Tv=0\}$\\
+
+\underline{Range (image)}: $\text{range}(T)=\{Tv:v\in V\}$\\
+
+\underline{Injective (one-to-one)}: $Tu=Tv \Rightarrow u = v$. Suppose $T\in \mathcal{L}(V, W)$. $T$ is injective $\Leftrightarrow$ $\text{null}(T)=\{0\}$. If $\dim(\text{null}(T))=0\Rightarrow\text{null}(T)=0$. If $\dim(V)>\dim(W)$, then no linear map is injective.\\
+
+\underline{Surjective (onto)}: If its range equals $W$. If $\dim(\text{range}(T))=\dim(W)\Rightarrow\text{range}(T)=W$. If $\dim(V)<\dim(W)$, no linear map is surjective.\\
+
+\underline{For f.d. vector space}: $T$ inj $\Leftrightarrow$ $T$ surj $\Leftrightarrow$ $T$ bijective (invertible)\\
+
+\underline{Rank Nullity Theorem}: For $T\in\mathcal{L}(V, W)$, we have
+$\dim(V)=\dim(\text{null}(T))+\dim(\text{range}(T))$\\
+
+\underline{Dimension}: $\dim\mathcal{L}(V, W)=\dim(V)\dim(W)$. $\dim(V_1\times\cdots\times V_m)=\dim(V_1)+\cdots+\dim(V_m)$\\
+}
+
+
+\end{multicols*}
+
+% End the document
+\end{document}
+.
